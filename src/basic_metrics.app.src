@@ -1,0 +1,12 @@
+{application, basic_metrics,
+ [
+  {description, "A basic VM metrics exporter to hostedgraphite.com."},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  exometer,
+                  recon
+                 ]}
+ ]}.
