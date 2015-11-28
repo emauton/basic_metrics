@@ -4,8 +4,7 @@
 %% See <a href="http://docs.hostedgraphite.com/#api-key">API key</a>.
 {mapping, "basic_metrics.key", "basic_metrics.key", [
   {datatype, string},
-  {default, "my-api-key"},
-  hidden
+  {default, "my-api-key"}
 ]}.
 
 %% @doc Application prefix for Graphite metrics.
@@ -16,8 +15,7 @@
 %% Typically this will be your application or service name.
 {mapping, "basic_metrics.prefix", "basic_metrics.prefix", [
   {datatype, string},
-  {default, "basic"},
-  hidden
+  {default, "basic"}
 ]}.
 
 %% @doc Carbon endpoint hostname to report metrics to.
