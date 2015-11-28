@@ -37,9 +37,9 @@ api() ->
 %% Exports exometer statistics from `riak_core' to the graphite reporter.
 %% See http://docs.basho.com/riak/latest/dev/references/http/status/ for
 %% explations of each stat.
--spec core(VNode) ->
+-spec core(VNode :: atom()) ->
     ok.
-core() ->
+core(VNode) ->
     ok = exometer_report:subscribe(exometer_report_graphite,
                                    [riak, riak_core, ignored_gossip_total],
                                    [value],
