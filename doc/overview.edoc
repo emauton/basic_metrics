@@ -73,3 +73,6 @@ existing exometer "function" exports in {@link basic_metrics:vm/0}.
 Simple wrapper for `exometer' to export useful metrics from an Erlang VM. Handles
 setting up Graphite reporting and dynamic addition, subscription and updates for
 several exometer entry types.
+
+=== basic_metrics_riak ===
+A "plugin" for basic_metrics to export metrics from `riak' subsystems.
