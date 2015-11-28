@@ -20,6 +20,7 @@ lint:
 
 docs: docsclean
 	$(REBAR) skip_deps=true doc
+	cp doc/*.png edoc
 
 docsclean:
 	rm -Rf edoc
