@@ -140,7 +140,7 @@ vm() ->
                                    [total, processes, system, atom, binary,
                                     ets], ?INTERVAL, [], true),
 
-	% Recon alloc.
+    % Recon alloc.
     ok = exometer:new([recon, alloc],
                       {function, recon_alloc, memory, ['$dp'], value,
                        [used, allocated, unused, usage]}),
@@ -149,7 +149,7 @@ vm() ->
                                    [used, allocated, unused, usage], ?INTERVAL,
                                    [], true),
 
-	% Recon alloc types.
+    % Recon alloc types.
     ok = exometer:new([recon, alloc, types],
                       {function, recon_alloc, memory,
                        [allocated_types], proplist,
@@ -163,7 +163,7 @@ vm() ->
                                     std_alloc, temp_alloc], ?INTERVAL,
                                    [], true),
 
-	% System process & port counts.
+    % System process & port counts.
     ok = exometer:new([erlang, system],
                       {function, erlang, system_info, ['$dp'], value,
                        [process_count, port_count]}),
@@ -172,7 +172,7 @@ vm() ->
                                    [process_count, port_count], ?INTERVAL,
                                    [], true),
 
-	% VM statistics.
+    % VM statistics.
     ok = exometer:new([erlang, statistics],
                       {function, erlang, statistics, ['$dp'], value,
                        [run_queue]}),
