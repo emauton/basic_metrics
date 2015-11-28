@@ -1,0 +1,75 @@
+@doc
+This document describes the design and implementation of the
+<a href="https://github.com/emauton/basic_metrics">basic_metrics</a>
+<a href="http://www.erlang.org/doc/design_principles/applications.html">Erlang/OTP application</a>.
+
+The intended audience is Erlang programmers. We assume a basic understanding of
+Erlang/OTP application structure and
+<a href="http://www.erlang.org/doc/design_principles/des_princ.html">design principles</a>.
+A suitable background should be provided by
+<a href="http://www.manning.com/logan/">Erlang and OTP in Action</a>
+by Logan et al.
+
+== Overview ==
+Erlang applications require metrics so we don't "fly blind" when developing
+and operating our systems.
+
+We accomplish this using
+<a href="https://github.com/Feuerlabs/exometer">exometer</a> to export metrics
+into Hosted Graphite.
+
+Rather than using exometer's static configuration options, we build
+everything dynamically. This is a little verbose, but clear and self-contained. 
+
+Once the application is included and started, you get the basic metrics listed
+in {@link basic_metrics:vm/0} and {@link basic_metrics_periodic}.
+
+You can then dynamically create and export your own application metrics using
+{@link basic_metrics:counter/2}, {@link basic_metrics:gauge/2}, and
+{@link basic_metrics:histogram/2}.
+
+For example,
+
+<pre>
+basic_metrics:histogram([api, latency, put], timer:now_diff(os:timestamp(), T0))
+</pre>
+
+This module depends upon and uses
+<a href="https://github.com/ferd/recon">recon</a> for additional metrics
+useful in production. See also
+<a href="http://www.erlang-in-anger.com/">Erlang in Anger</a>.
+
+The exometer integration is based on Brian Troutwine's notes in
+<a href="http://goo.gl/Xo4fWi">
+Monitoring with Exometer: An Ongoing Love Story</a>. For lots more detail
+on using exometer, see that article and the exometer documentation.
+
+== Processes ==
+`basic_metrics' presents an
+<a href="http://www.erlang.org/doc/design_principles/des_princ.html">Erlang/OTP supervision hierarchy</a>
+with the following shape:
+<center><img src="basic_metrics_processes.png" width="300" alt="basic_metrics process tree diagram"></img></center>
+(<a href="https://docs.google.com/drawings/d/1LoVhZXvbzQwl567lLCrFunmkMNlpor9bIDHeLiTDpcc/edit">source</a>)
+
+The <strong>bold</strong> components correspond to modules provided by the
+`basic_metrics' application:
+
+=== basic_metrics_app ===
+The callback module for the `basic_metrics'
+<a href="http://www.erlang.org/doc/design_principles/applications.html">application master</a>.
+Initializes {@link basic_metrics} and starts {@link basic_metrics_sup}.
+
+=== basic_metrics_sup ===
+The main application supervisor. Manages {@link basic_metrics_periodic}.
+
+=== basic_metrics_periodic ===
+Manages regular update and export of Erlang VM metrics (e.g. distribution
+socket and scheduler stats) which are dynamic or don't fit well into the
+existing exometer "function" exports in {@link basic_metrics:vm/0}.
+
+== Additional modules ==
+
+=== basic_metrics ===
+Simple wrapper for `exometer' to export useful metrics from an Erlang VM. Handles
+setting up Graphite reporting and dynamic addition, subscription and updates for
+several exometer entry types.

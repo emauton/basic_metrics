@@ -1,0 +1,35 @@
+%%-*- mode: erlang -*-
+
+%% @doc Hosted Graphite API key for reporting metrics to.
+%% See <a href="http://docs.hostedgraphite.com/#api-key">API key</a>.
+{mapping, "basic_metrics.key", "basic_metrics.key", [
+  {datatype, string},
+  {default, "my-api-key"},
+  hidden
+]}.
+
+%% @doc Application prefix for Graphite metrics.
+%% This forms the first component of your
+%% <a href="http://docs.hostedgraphite.com/#metric-data-format">
+%% metric name hierarchy</a>, e.g.
+%% `<Prefix>.<hostname>.erlang.statistics.run_queue'.
+%% Typically this will be your application or service name.
+{mapping, "basic_metrics.prefix", "basic_metrics.prefix", [
+  {datatype, string},
+  {default, "basic"},
+  hidden
+]}.
+
+%% @doc Carbon endpoint hostname to report metrics to.
+{mapping, "basic_metrics.host", "basic_metrics.host", [
+  {datatype, string},
+  {default, "carbon.hostedgraphite.com"},
+  hidden
+]}.
+
+%% @doc Carbon endpoint port to report metrics to.
+{mapping, "basic_metrics.port", "basic_metrics.port", [
+  {datatype, integer},
+  {default, 2003},
+  hidden
+]}.
