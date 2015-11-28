@@ -16,7 +16,7 @@ and operating our systems.
 
 We accomplish this using
 <a href="https://github.com/Feuerlabs/exometer">exometer</a> to export metrics
-into Hosted Graphite.
+into <a href="https://www.hostedgraphite.com">Hosted Graphite</a>.
 
 Rather than using exometer's static configuration options, we build
 everything dynamically. This is a little verbose, but clear and self-contained. 
